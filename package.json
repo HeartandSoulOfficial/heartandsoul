@@ -1,0 +1,23 @@
+{
+  "name": "heartandsoul",
+  "version": "1.0.0",
+  "description": "Heart and Soul Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeartandSoulOfficial/heartandsoul.git"
+  },
+  "author": "Flaming",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HeartandSoulOfficial/heartandsoul/issues"
+  },
+  "homepage": "https://github.com/HeartandSoulOfficial/heartandsoul#readme",
+  "dependencies": {
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0"
+  }
+}
