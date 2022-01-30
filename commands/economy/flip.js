@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args, gprefix) => {
     } else{
         data.balance = data.balance + amount
         await data.save()
-        win.setDescription(`**The coin landed on tails.**\nYou won __${amount.toLocaleString()}__\nNew balance is \`${data.balance.toLocaleString()}\``)
+        win.setDescription(`**The coin landed on heads.**\nYou won __${amount.toLocaleString()}__\nNew balance is \`${data.balance.toLocaleString()}\``)
         message.channel.send({embeds: [win]})
     }
 }
