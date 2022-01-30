@@ -16,11 +16,6 @@ require('dotenv').config();
 
 client.commands = new Discord.Collection();
 
-/*client.on('messageCreate', message => {
-    if (message.content === `${prefix}invite`)
-        message.reply("Here is our invite link:\nhttps://discord.com/oauth2/authorize?client_id=920885512208793652&permissions=415068712000&scope=bot")
-})*/
-
 fs.readdirSync('./commands/').forEach(dir => {
     fs.readdir(`./commands/${dir}`, (err, files) => {
         if (err) throw err;
