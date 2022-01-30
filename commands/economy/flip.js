@@ -32,7 +32,9 @@ module.exports.run = async (client, message, args, gprefix) => {
         balSchema.create({ _id: Target.id, balance: 0 })
         return message.channel.send({embeds: [broke]})
     }
-    
+    if (data.balance < amount){
+        return message.channel.send({embeds: [broke]})
+    }
     if(random == 0){
         if (data.balance < amount){
             data.balance = 0
