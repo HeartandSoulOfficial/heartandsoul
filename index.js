@@ -7,15 +7,19 @@ const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAG
 const fs = require('fs')
 
 const prefix = 'hns'
+const ms = require('parse-ms')
+require('./mongo')()
+
+const PrefixSchema = require('./Schema/prefixSchema')
 
 require('dotenv').config();
 
 client.commands = new Discord.Collection();
 
-client.on('messageCreate', message => {
+/*client.on('messageCreate', message => {
     if (message.content === `${prefix}invite`)
         message.reply("Here is our invite link:\nhttps://discord.com/oauth2/authorize?client_id=920885512208793652&permissions=415068712000&scope=bot")
-})
+})*/
 
 fs.readdirSync('./commands/').forEach(dir => {
     fs.readdir(`./commands/${dir}`, (err, files) => {
@@ -49,13 +53,33 @@ class Client extends Discord.Client {
 
 client.on('messageCreate', async message => {
     if(message.author.bot || message.channel.type == 'DM') return
-    let gprefix = 'hns'
+
     let messageArray = message.content.split(" ")
     let cmd = messageArray[0]
     let args = messageArray.slice(1)
 
-    let commands = client.commands.get(cmd.slice(gprefix.length))
+    let gprefix;
+    let commands;
 
+    let data = await PrefixSchema.findOne({
+        _id: message.guild.id
+    })
+    if (message.content.startsWith('hns')){
+        gprefix = 'hns'
+    }
+    else {
+        if (data === null){
+            gprefix = 'hns'
+        } else {
+            if (data.newPrefix === undefined){
+                gprefix = 'hns'
+            }
+            else {
+            gprefix = data.newPrefix
+            }
+        }
+    }
+    commands = client.commands.get(cmd.slice(gprefix.length))
     if(commands){ 
         if(!message.content.startsWith(gprefix)) return
         commands.run(client, message, args, gprefix)}
