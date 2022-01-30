@@ -1,6 +1,5 @@
 const {discord, MessageEmbed, MessageFlags} = require('discord.js')
 const moment = require('moment')
-const getRole = require('../../getRole.js')
 
 module.exports.run = async (client, message, args, gprefix) => {
     let userID = args[0]
