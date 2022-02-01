@@ -26,12 +26,6 @@ module.exports.run = async (client, message, args, gprefix) => {
             .setColor('BLUE')
         return message.channel.send({embeds: [response]})
     }
-    if(newprefix.length <= 5 && newprefix.length > 3 && newprefix.startsWith('hns') && newprefix != 'current'){
-        const response = new MessageEmbed()
-        .setDescription('Please provide a valid prefix')
-        .setColor('FUCHSIA')
-    return message.channel.send({embeds: [response]})
-    }
     
     // getting the data/schema from the database
     let data = await PrefixSchema.findOne({ _id: message.guild.id })

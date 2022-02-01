@@ -35,46 +35,31 @@ fs.readdirSync('./commands/').forEach(dir => {
     })
 })
 
-/*
-const Discord = require('discord.js')
-
-const ntents = new Discord.Intents(32767)
-
-class Client extends Discord.Client {
-    constructor(options) {
-        super({intents})
-    }
-}*/
-
 client.on('messageCreate', async message => {
     if(message.author.bot || message.channel.type == 'DM') return
-
-    let messageArray = message.content.split(" ")
-    let cmd = messageArray[0]
-    let args = messageArray.slice(1)
-
+    let messageArray
+    let args;
+    let cmd;
     let gprefix;
     let commands;
 
+    //Finds guild prefix
     let data = await PrefixSchema.findOne({
         _id: message.guild.id
     })
-    if (message.content.startsWith('hns')){
+    //If not found or startswith global prefix set to global
+    if (!data || message.content.startsWith('hns')){
         gprefix = 'hns'
+    } else {
+    //Sets gprefix to guild prefix
+        gprefix = data.newPrefix
     }
-    else {
-        if (data === null){
-            gprefix = 'hns'
-        } else {
-            if (data.newPrefix === undefined){
-                gprefix = 'hns'
-            }
-            else {
-            gprefix = data.newPrefix
-            }
-        }
-    }
-    commands = client.commands.get(cmd.slice(gprefix.length))
+    //Splits message content into command name and args
+    messageArray = message.content.split(gprefix).join("").trim().split(" ")
+    args = messageArray.slice(1)
+    cmd = messageArray[0]
+
+    commands = client.commands.get(cmd)
     if(commands){ 
         if(!message.content.startsWith(gprefix)) return
         commands.run(client, message, args, gprefix)}
@@ -83,39 +68,5 @@ client.on('messageCreate', async message => {
 client.on('ready', () => {
     console.log('Ready')
 })
-
-/*fs.readdirSync('./commands/')
-    .filter(file => file.endsWith('.js'))
-    .forEach(file => {
-        const command = require(`./commands/${file}`)
-        console.log(`Command ${command.name} loaded`)
-        client.commands.set(command.name, command)
-    })
-*/
-/*fs.readdirSync('./commands/').forEach(dir => {
-
-    fs.readdir(`./commands/${dir}`, (err, files) => {
-
-        if (err) throw err;
-
-        var jsFiles = files.filter(f => f.split('.').pop() === 'js')
-
-        if (jsFiles.length <= 0){
-        console.log("No commands found.");
-        }
-
-        jsFiles.forEach(file => {
-            var fileGet = require(`./commands/${dir}/${file}`);
-            console.log(`File ${file} was loaded`)
-
-            try {
-                client.commands.set(fileGet.help.name, fileGet);
-            } catch (err) {
-                return console.log(err)
-            }
-
-        })
-    })
-})*/
 
 client.login(process.env.TOKEN)
