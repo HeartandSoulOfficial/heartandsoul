@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js')
 const balSchema = require('../../Schema/balSchema')
 
 module.exports.run = async (client, message, args, gprefix) => {
-    let amount;
+    let amount = args[0];
     let random = Math.floor(Math.random() * 2)
     const Target = message.member.user
 
@@ -20,11 +20,9 @@ module.exports.run = async (client, message, args, gprefix) => {
     const win = new MessageEmbed()
         .setColor('LUMINOUS_VIVID_PINK')
 
-    try {
-        amount = parseInt(args[0])
-        if(Number.isNaN(amount) || amount < 1) return message.channel.send({embeds: [invalid]})
-    } catch(err){
-        return message.channel.send({embeds: [invalid]})
+    if(amount != 'half' && amount != 'all'){
+        amount = parseInt(amount)
+        if(Number.isNaN(amount) || amount < 0) return message.channel.send({embeds: [invalid]})
     }
 
     let data = await balSchema.findOne({ _id: Target.id })
@@ -32,9 +30,17 @@ module.exports.run = async (client, message, args, gprefix) => {
         balSchema.create({ _id: Target.id, balance: 0 })
         return message.channel.send({embeds: [broke]})
     }
+
     if (data.balance < amount){
         return message.channel.send({embeds: [broke]})
     }
+
+    if(amount == 'half'){
+        amount = Math.floor(data.balance/2)
+    } else if(amount == 'all'){
+        amount = data.balance
+    }
+
     if(random == 0){
         if (data.balance < amount){
             data.balance = 0

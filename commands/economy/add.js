@@ -24,12 +24,8 @@ module.exports.run = async (client, message, args, gprefix) => {
         catch(err){ return message.channel.send({embeds: [unfound]}) }
     }
 
-    try{
-        amount = parseInt(args[1])
-        if(Number.isNaN(amount) || amount < 0) return message.channel.send({embeds: [invalid]}) 
-    } catch(err){
-        return message.channel.send({embeds: [invalid]})
-    }
+    amount = parseInt(args[1])
+    if(Number.isNaN(amount) || amount < 0) return message.channel.send({embeds: [invalid]})
 
     let data = await balSchema.findOne({ _id: Target.id })
     let success = new MessageEmbed().setColor('GREEN');
