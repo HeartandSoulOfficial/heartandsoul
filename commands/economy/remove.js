@@ -46,5 +46,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 
 module.exports.help = {
-    name: 'remove'
+    name: 'remove-money',
+    aliases: ['remove']
 }
