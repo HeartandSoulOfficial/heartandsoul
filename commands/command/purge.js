@@ -23,5 +23,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 
 module.exports.help = {
-    name: 'purge'
+    name: 'purge',
+    aliases: ['prune']
 }

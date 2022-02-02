@@ -10,5 +10,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 
 module.exports.help = {
-    name: 'invite'
+    name: 'invite',
+    aliases: ['inv']
 }

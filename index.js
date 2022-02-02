@@ -15,6 +15,7 @@ const PrefixSchema = require('./Schema/prefixSchema')
 require('dotenv').config();
 
 client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
 
 fs.readdirSync('./commands/').forEach(dir => {
     fs.readdir(`./commands/${dir}`, (err, files) => {
@@ -28,6 +29,13 @@ fs.readdirSync('./commands/').forEach(dir => {
             console.log(`[Command Handler] - File ${file} was loaded`)
             try {
                 client.commands.set(fileGet.help.name, fileGet)
+                if(fileGet.help.aliases == undefined){
+                    return
+                } else {
+                    fileGet.help.aliases.forEach(alias => {
+                        client.aliases.set(alias, fileGet.help.name)
+                    })
+                }
             } catch (err) {
                 return console.log(err)
             }
@@ -50,6 +58,8 @@ client.on('messageCreate', async message => {
     //If not found or startswith global prefix set to global
     if (!data || message.content.startsWith('hns')){
         gprefix = 'hns'
+    } else if(message.mentions.users.first().id == '920885512208793652'){
+        gprefix = '<@!920885512208793652>'
     } else {
     //Sets gprefix to guild prefix
         gprefix = data.newPrefix
@@ -59,7 +69,7 @@ client.on('messageCreate', async message => {
     args = messageArray.slice(1)
     cmd = messageArray[0]
 
-    commands = client.commands.get(cmd)
+    commands = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
     if(commands){ 
         if(!message.content.startsWith(gprefix)) return
         commands.run(client, message, args, gprefix)}

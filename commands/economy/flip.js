@@ -59,5 +59,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 
 module.exports.help = {
-    name: "flip"
+    name: "coinflip",
+    aliases: ['cf','flip']
 }

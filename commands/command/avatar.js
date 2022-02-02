@@ -35,5 +35,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 
 module.exports.help = {
-    name: 'av'
+    name: 'avatar',
+    aliases: ['av']
 }

@@ -4,5 +4,6 @@ module.exports.run = async (client, message, args, gprefix) => {
     message.reply("Hello!")
 }
 module.exports.help = {
-    name: 'hello'
+    name: 'hello',
+    aliases: ['hi']
 }

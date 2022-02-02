@@ -66,5 +66,6 @@ module.exports.run = async (client, message, args, gprefix) => {
     }
 }
 module.exports.help = {
-    name: 'prefix'
+    name: 'prefix',
+    aliases: []
 }

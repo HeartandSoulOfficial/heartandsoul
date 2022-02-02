@@ -18,5 +18,6 @@ module.exports.run = async (client, message, args, gprefix) => {
     }
 }
 module.exports.help = {
-    name: 'bal'
+    name: 'balance',
+    aliases: ['coins']
 }

@@ -61,5 +61,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 
 module.exports.help = {
-    name: 'daily'
+    name: 'daily',
+    aliases: []
 }
