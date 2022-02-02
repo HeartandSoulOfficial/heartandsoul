@@ -11,7 +11,6 @@ module.exports.run = async (client, message, args, gprefix) => {
         let roleColor;
 
         let Member = await message.guild.members.fetch(Target.id)
-        console.log(Member)
         Member._roles.map(r => roleCount.push(r));
         Member._roles.map(r => roleList.push("<@&" + r + ">")).reverse().join(" ")
         
