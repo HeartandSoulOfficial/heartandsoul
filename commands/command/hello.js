@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 
 module.exports.run = async (client, message, args, gprefix) => {
-    message.channel.send("Hello!").catch(console.error)
+    message.reply("Hello!")
 }
 module.exports.help = {
     name: 'hello'
