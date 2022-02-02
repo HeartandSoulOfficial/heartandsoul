@@ -11,12 +11,12 @@ module.exports.run = async (client, message, args, gprefix) => {
 
     if (args.length == 0){
         Target = message.member.user
-        found.setAuthor({name: Target.username, iconURL: Target.displayAvatarURL({dynamic: true})})
+        found.setAuthor({name: Target.username+"#"+Target.discriminator, iconURL: Target.displayAvatarURL({dynamic: true})})
             .setImage(Target.displayAvatarURL({dynamic: true, size: 512}))
         return message.channel.send({embeds: [found]})
     }
     if(Target){
-        found.setAuthor({name: Target.username, iconURL: Target.displayAvatarURL({dynamic: true})})
+        found.setAuthor({name: Target.username+"#"+Target.discriminator, iconURL: Target.displayAvatarURL({dynamic: true})})
             .setImage(Target.displayAvatarURL({dynamic: true, size: 512}))
         return message.channel.send({embeds: [found]})
     } else if (!Target && args.length == 1){
@@ -26,7 +26,7 @@ module.exports.run = async (client, message, args, gprefix) => {
         catch(err){
             return message.channel.send({embeds: [unfound]})
         }
-        found.setAuthor({name: Target.user.username, iconURL: Target.user.displayAvatarURL({dynamic: true})})
+        found.setAuthor({name: Target.user.username+"#"+Target.user.discriminator, iconURL: Target.user.displayAvatarURL({dynamic: true})})
             .setImage(Target.displayAvatarURL({dynamic: true, size: 512}))
         return message.channel.send({embeds: [found]})
     } else {
