@@ -11,7 +11,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
     if (args.length == 0){
         Target = message.member.user
-        console.log(Target.displayAvatarURL({dynamic: true}))
         found.setAuthor({name: Target.username, iconURL: Target.displayAvatarURL({dynamic: true})})
             .setImage(Target.displayAvatarURL({dynamic: true, size: 512}))
         return message.channel.send({embeds: [found]})
