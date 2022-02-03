@@ -62,7 +62,7 @@ client.on('messageCreate', async message => {
         }
     }
     //If found and starts with prefix set to guild prefix else global
-     else if(data){
+    else if(data){
         if(message.content.startsWith(data.prefix)){
             gprefix = data.newPrefix
         }
