@@ -50,22 +50,24 @@ client.on('messageCreate', async message => {
     let cmd;
     let gprefix;
     let commands;
-
+    let mprefix = message.mentions.users.first()
     //Finds guild prefix
     let data = await PrefixSchema.findOne({
         _id: message.guild.id
     })
-    //If found set to guild prefix
-    if (data){
-        gprefix = data.newPrefix
-    //If not found and starts with global prefix set to global prefix
-    } else if(!data && message.content.startsWith('hns')){
-        gprefix = 'hns'
+    //If mentions bot
+    if (mprefix){
+        if(mprefix.id == '920885512208793652'){
+            gprefix = '<@!920885512208793652>'
+        }
     }
-    //If mentions bot set prefix to mention bot
-     else if(message.mentions.users.first().id == '920885512208793652'){
-        gprefix = '<@!920885512208793652>'
+    //If found and starts with prefix set to guild prefix else global
+     else if(data){
+        if(message.content.startsWith(data.prefix)){
+            gprefix = data.newPrefix
+        }
     }
+    gprefix = gprefix || 'hns'
     //Splits message content into command name and args
     messageArray = message.content.split(gprefix).join("").trim().split(" ")
     args = messageArray.slice(1)
