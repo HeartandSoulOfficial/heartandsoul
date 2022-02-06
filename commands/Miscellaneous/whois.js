@@ -4,11 +4,12 @@ const moment = require('moment')
 module.exports.run = async (client, message, args, gprefix) => {
     let userID = args[0]
     let Target = message.mentions.users.first()
+    let roleList = [];
+    let roleCount = []
+    let roleColor;
+
     try{
         if(Target){
-        let roleList = [];
-        let roleCount = []
-        let roleColor;
 
         let Member = await message.guild.members.fetch(Target.id)
         Member._roles.map(r => roleCount.push(r));
@@ -37,9 +38,6 @@ module.exports.run = async (client, message, args, gprefix) => {
         else if(!Target && args.length == 1) {
             try {
                 let Target = await message.guild.members.fetch(userID)
-                let roleList = [];
-                let roleCount = []
-                let roleColor;
     
                 let Member = await message.guild.members.fetch(Target.id)
     
@@ -72,9 +70,6 @@ module.exports.run = async (client, message, args, gprefix) => {
         }
         else{
             Target = message.member.user
-            let roleList = [];
-            let roleCount = []
-            let roleColor;
 
             let Member = await message.guild.members.fetch(Target.id)
             Member._roles.map(r => roleCount.push(r));
