@@ -7,7 +7,8 @@ module.exports.run = async (client, message, args, gprefix) => {
     let human = await server.members.fetch().then(human => human.filter(member => !member.user.bot).size)
     let bot = await server.members.fetch().then(bot => bot.filter(member => member.user.bot).size)
     let online = (await server.members.fetch()).filter(member => member.presence?.status === "online").size
-    let offline = (await server.members.fetch()).filter(member => member.presence?.status === "offline").size
+    let offline = (await server.members.fetch()).filter(member => !member.presence || member.presence?.status === "offline").size
+
     let count = new MessageEmbed()
         .addField('Members', `${server.memberCount}`)
         .addFields(
@@ -22,9 +23,6 @@ module.exports.run = async (client, message, args, gprefix) => {
         )
         .setColor('RANDOM')
     wait.then(msg => msg.edit({embeds: [count]}))
-    /*console.log(human)
-    console.log(bot)*/
-    //console.log(offline)
     
 }
 
