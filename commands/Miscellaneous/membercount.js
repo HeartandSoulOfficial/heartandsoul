@@ -8,7 +8,8 @@ module.exports.run = async (client, message, args, gprefix) => {
     let bot = await server.members.fetch().then(bot => bot.filter(member => member.user.bot).size)
     let online = (await server.members.fetch()).filter(member => member.presence?.status === "online").size
     let offline = (await server.members.fetch()).filter(member => member.presence?.status === "offline").size
-    let memberCount = new MessageEmbed()
+    let count = new MessageEmbed()
+        .addField('Members', `${server.memberCount}`)
         .addFields(
             {name: 'Human', value: `:bust_in_silhouette:${human}`, inline: true},
             {name: '​', value: '​', inline: true},
@@ -20,7 +21,7 @@ module.exports.run = async (client, message, args, gprefix) => {
             {name: 'Offline', value: `<:offline:939692660921344100>${offline}`, inline: true}
         )
         .setColor('RANDOM')
-    wait.then(msg => msg.edit({embeds: [memberCount]}))
+    wait.then(msg => msg.edit({embeds: [count]}))
     /*console.log(human)
     console.log(bot)*/
     //console.log(offline)
