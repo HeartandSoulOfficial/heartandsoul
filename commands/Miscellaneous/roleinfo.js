@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args, gprefix) => {
     let perms = role.permissions.toArray()
     let created = role.createdAt
 
-    for(i=0; i<perms.length; i++){
+    for(let i=0; i<perms.length; i++){
        if(keyPerms.includes(perms[i])){
            if(perms[i] == 'MANAGE_GUILD'){
                perms[i] = 'MANAGE_SERVER'
@@ -34,8 +34,8 @@ module.exports.run = async (client, message, args, gprefix) => {
            }
            let words = perms[i].split("_")
            let combined = []
-           for(j=0; j<words.length; j++){
-               let word = words[j].toLowerCase()
+           for(let j of words){
+               let word = j.toLowerCase()
                combined.push(word[0].toUpperCase()+word.substring(1))
            }
            hasKeyPerms.push(combined.join(' '))
