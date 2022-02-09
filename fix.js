@@ -29,7 +29,7 @@ module.exports = {
             if(variable == null){
                 return "None"
             } else{
-                return `https://discord.gg/${variable}`
+                return `[discord.gg/${variable}](https://discord.gg/${variable})`
             }
         }
 }
