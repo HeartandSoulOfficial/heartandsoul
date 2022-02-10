@@ -12,28 +12,27 @@ module.exports.run = async (client, message, args, gprefix) => {
     let info = new MessageEmbed()
     .setAuthor({name: client.user.username, iconURL: client.user.displayAvatarURL({dynamic: true})})
     .addFields(
+        {name: 'Dedicated For', value: 'Gosu General', inline: true},
         {name: 'Version', value: '1.0.0', inline: true},
+        {name: 'Library', value: 'Javascript', inline: true}
+    )
+    .addFields(
         {name: 'Creator', value: ownerName, inline: true},
-        {name: 'Servers', value: `${guilds.size}`, inline: true}
-    )
-    .addFields(
-        {name: 'Library', value: 'Javascript', inline: true},
         {name: 'Created', value: `${moment(client.user.createdAt).format('MM/D/YYYY hh:mma')}`, inline: true},
-        {name: 'Users', value: `${userCount}`, inline: true}
-
-    )
-    .addFields(
-        {name: 'Dedicated', value: 'For Gosu General', inline: true},
-        {name: '​', value: '​', inline: true},
         {name: 'Server', value: '[Link](https://discord.gg/gosugeneral)', inline: true}
     )
+    .addFields(
+        {name: 'Servers', value: `${guilds.size}`, inline: true},
+        {name: 'Users', value: `${userCount}`, inline: true},
+        {name: `Joined`, value: `${moment(client.user.joinedAt).format('MM/DD/YY')}`, inline: true}
+    )
     .setColor("#820300")
-    .setFooter({text: `Joined ${moment(client.user.joinedAt).format('MM/DD/YY')}`})
 
     message.channel.send({embeds: [info]})
 }
 
 module.exports.help = {
     name: 'info',
-    aliases: []
+    aliases: [],
+    module: 'Info'
 }
