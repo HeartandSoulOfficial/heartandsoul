@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 const moment = require('moment')
-const fix = require('../../fix')
+const {Fix} = require('../../fix')
 
 module.exports.run = async (client, message, args, gprefix) => {
     const unfound = new MessageEmbed()
@@ -15,12 +15,12 @@ module.exports.run = async (client, message, args, gprefix) => {
 
     const roleID = role.id
     const roleName = role.name
-    let roleColor = fix.Fix(role.hexColor)
+    let roleColor = Fix(role.hexColor)
     const mention = `\`<@&${role.id}>\``
-    let hoisted = fix.Fix(role.hoist)
+    let hoisted = Fix(role.hoist)
     const location = role.position
-    let isMentionable = fix.Fix(role.mentionable)
-    let manage = fix.Fix(role.managed)
+    let isMentionable = Fix(role.mentionable)
+    let manage = Fix(role.managed)
     let perms = role.permissions.toArray()
     let created = role.createdAt
 

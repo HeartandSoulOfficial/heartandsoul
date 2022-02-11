@@ -1,4 +1,4 @@
-module.exports = {
+/*module.exports = {
         Fix: (variable) => {
         if(variable){
             return "Yes"
@@ -32,4 +32,4 @@ module.exports = {
                 return `[discord.gg/${variable}](https://discord.gg/${variable})`
             }
         }
-}
+}*/

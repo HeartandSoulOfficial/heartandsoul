@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 const moment = require('moment')
-const fix = require('../../fix')
+const {fixTier, fixVanity}= require('../../functions')
 
 module.exports.run = async (client, message, args, gprefix) => {
     let owner = (await message.guild.fetchOwner()).user
@@ -10,8 +10,8 @@ module.exports.run = async (client, message, args, gprefix) => {
     let roleSize = (await message.guild.roles.fetch()).size
     let memberSize = message.guild.memberCount
     let boostCount = message.guild.premiumSubscriptionCount
-    let boostTier = fix.fixTier(message.guild.premiumTier)
-    let vanity = fix.fixVanity(message.guild.vanityURLCode)
+    let boostTier = fixTier(message.guild.premiumTier)
+    let vanity = fixVanity(message.guild.vanityURLCode)
     let serverIcon = message.guild.iconURL({dynamic: true})
     if(serverIcon == null){
         serverIcon = 'https://techyhost.com/wp-content/uploads/2021/06/Discord-logo.png'
