@@ -6,12 +6,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
     if(!message.content.startsWith(gprefix)) return
 
-    if(!message.member.permissions.has('ADMINISTRATOR')) {
-        const response = new MessageEmbed()
-            .setDescription('You don\'t have permissions to use this command')
-            .setColor('RED')
-        return message.channel.send({embeds: [response]})
-    }
     let newprefix = args[0]
 
     if(!newprefix) {
@@ -67,5 +61,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 module.exports.help = {
     name: 'prefix',
-    aliases: []
+    aliases: [],
+    permLevel: "Administrator"
 }

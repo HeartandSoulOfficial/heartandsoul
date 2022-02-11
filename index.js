@@ -1,18 +1,33 @@
 const Discord = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 
 const {Intents} = require('discord.js');
 
 const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES] });
 
 const fs = require('fs')
+const permlevel = require('./functions')
 
 const prefix = 'hns'
 const ms = require('parse-ms')
 require('./mongo')()
 
-const PrefixSchema = require('./Schema/prefixSchema')
+const PrefixSchema = require('./Schema/prefixSchema');
+const { permLevels } = require('./config');
 
 require('dotenv').config();
+
+
+const levelCache = {}
+
+for (let i of permLevels) {
+    const thisLevel = i;
+    levelCache[thisLevel.name] = thisLevel.level;
+}
+
+client.container = {
+    levelCache
+}
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -44,7 +59,11 @@ fs.readdirSync('./commands/').forEach(dir => {
 })
 
 client.on('messageCreate', async message => {
+    const deny = new MessageEmbed()
+        .setDescription('You don\'t have permissions to use this command')
+        .setColor('RED')
     if(message.author.bot || message.channel.type == 'DM') return
+    const level = permlevel(message);
     let messageArray
     let args;
     let cmd;
@@ -74,8 +93,12 @@ client.on('messageCreate', async message => {
     cmd = messageArray[0]
 
     commands = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
+
     if(commands){ 
         if(!message.content.startsWith(gprefix)) return
+        if (level < client.container.levelCache[commands.help.permLevel]) {
+            return message.channel.send({embeds: [deny]})
+        }
         commands.run(client, message, args, gprefix)}
 })
 

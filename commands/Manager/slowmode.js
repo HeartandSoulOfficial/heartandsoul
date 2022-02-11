@@ -38,5 +38,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'slowmode',
-    aliases: ['slow', 'ratelimit', 'rate', 'rm', 'sm']
+    aliases: ['slow', 'ratelimit', 'rate', 'rm', 'sm'],
+    permLevel: "Server Moderator"
 }

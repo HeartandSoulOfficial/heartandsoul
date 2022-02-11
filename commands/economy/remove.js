@@ -11,11 +11,6 @@ module.exports.run = async (client, message, args, gprefix) => {
     const invalid = new MessageEmbed()
         .setDescription("Enter a valid number to remove from the user.")
         .setColor('YELLOW')
-    const deny = new MessageEmbed()
-        .setDescription('You don\'t have permissions to use this command')
-        .setColor('RED')
-
-    if(!message.member.permissions.has('ADMINISTRATOR')) return message.channel.send({embeds: [deny]});
 
     if(args.length == 0) return message.channel.send({embeds: [unfound]})
 
@@ -47,5 +42,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'remove-money',
-    aliases: ['remove']
+    aliases: ['remove'],
+    permLevel: "Bot Owner"
 }

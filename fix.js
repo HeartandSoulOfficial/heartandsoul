@@ -1,8 +1,8 @@
 module.exports = {
         Fix: (variable) => {
-        if(variable == true){
+        if(variable){
             return "Yes"
-        } else if(variable == false){
+        } else if(!variable){
             return "No"
         } else if(variable == undefined || variable == null){
             return "None"
@@ -18,8 +18,8 @@ module.exports = {
             } else {
                 let words = variable.split("_")
                 let combined = []
-                for(j=0; j<words.length; j++){
-                    let word = words[j].toLowerCase()
+                for(let j of words){
+                    let word = j.toLowerCase()
                     combined.push(word[0].toUpperCase()+word.substring(1))
                 }
                 return combined.join(" ")

@@ -60,5 +60,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: "coinflip",
-    aliases: ['cf','flip']
+    aliases: ['cf','flip'],
+    permLevel: "User"
 }

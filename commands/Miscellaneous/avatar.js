@@ -36,5 +36,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'avatar',
-    aliases: ['av']
+    aliases: ['av'],
+    permLevel: 'User'
 }

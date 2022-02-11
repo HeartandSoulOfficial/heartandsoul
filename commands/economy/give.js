@@ -62,5 +62,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'give',
-    aliases: ['share']
+    aliases: ['share'],
+    permLevel: "User"
 }

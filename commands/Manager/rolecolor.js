@@ -13,15 +13,11 @@ module.exports.run = async (client, message, args, gprefix) => {
     const invalid = new MessageEmbed()
         .setDescription("Provide a color in hex.")
         .setColor('YELLOW')
-    const deny = new MessageEmbed()
-        .setDescription('You don\'t have permissions to use this command')
-        .setColor('RED')
+
     let changed = new MessageEmbed()
 
     let Target = await message.guild.members.fetch(client.user.id)
     let role = message.mentions.roles.first() || await message.guild.roles.fetch(args[0])
-
-    if(!message.member.permissions.has('ADMINISTRATOR')) return message.channel.send({embeds: [deny]})
 
     if(!message.channel.permissionsFor(Target).has('MANAGE_ROLES')){
         return message.channel.send({embeds: [perms]})
@@ -69,5 +65,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'rolecolor',
-    aliases: ['rc']
+    aliases: ['rc'],
+    permLevel: "Administrator"
 }

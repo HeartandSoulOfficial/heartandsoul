@@ -69,5 +69,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'roleinfo',
-    aliases: ['rinfo']
+    aliases: ['rinfo'],
+    permLevel: 'User'
 }

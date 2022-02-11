@@ -7,5 +7,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 module.exports.help = {
     name: 'ping',
-    aliases: ['pong','ms']
+    aliases: ['pong','ms'],
+    permLevel: "User"
 }
