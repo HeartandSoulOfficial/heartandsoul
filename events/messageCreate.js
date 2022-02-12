@@ -1,7 +1,7 @@
 const {MessageEmbed} = require('discord.js')
 const PrefixSchema = require('../Schema/prefixSchema')
 const config = require('../config')
-const permlevel = require('../functions')
+const {permlevel} = require('../functions')
 
 module.exports = async (client, message) => {
     const { container } = client
