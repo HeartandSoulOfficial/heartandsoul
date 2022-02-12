@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 const moment = require('moment')
-const {Fix} = require('../../fix')
+const {Fix} = require('../../functions')
 
 module.exports.run = async (client, message, args, gprefix) => {
     const unfound = new MessageEmbed()
