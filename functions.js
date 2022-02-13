@@ -1,4 +1,5 @@
 const config = require('./config')
+const {MessageEmbed} = require('discord.js')
 
 function permlevel(message) {
     let permlvl = 0;
@@ -52,4 +53,25 @@ function fixVanity(variable) {
     }
 }
 
-module.exports = {permlevel, Fix, fixTier, fixVanity}
+function unfound(message) {
+    const unfound = new MessageEmbed()
+        .setDescription("Couldn't find that user.")
+        .setColor('FUCHSIA')
+    return message.channel.send({embeds: [unfound]})
+}
+
+function invalid(message, args){
+    const invalid = new MessageEmbed()
+        .setDescription(`Enter a valid number to ${args}`)
+        .setColor('YELLOW')
+    return message.channel.send({embeds: [invalid]})
+}
+
+function broke(message, args){
+    const broke = new MessageEmbed()
+        .setDescription(`You do not have enough money to ${args}`)
+        .setColor('WHITE')
+    return message.channel.send({embeds: [broke]})
+}
+
+module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke}

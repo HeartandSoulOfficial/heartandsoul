@@ -3,12 +3,12 @@ const moment = require('moment')
 require('dotenv').config()
 
 module.exports.run = async (client, message, args, gprefix) => {
-    let guilds = await client.guilds.fetch()
-    let ownerGuild = await client.guilds.fetch(process.env.OWNER_GUILD)
-    let owner = (await ownerGuild.members.fetch(process.env.OWNER_ID)).user
-    let ownerName = `${owner.username}#${owner.discriminator}` || 'Flaming'
-    let userCount = client.users.cache.size || 0
-
+    let guilds = await client.guilds.fetch() //Fetch all guilds of client
+    let ownerGuild = await client.guilds.fetch(process.env.OWNER_GUILD) //Fetch bot owner guild
+    let owner = (await ownerGuild.members.fetch(process.env.OWNER_ID)).user //Fetch owner from owner guild
+    let ownerName = `${owner.username}#${owner.discriminator}` || 'Flaming' //Set owner name to owner username else Flaming
+    let userCount = client.users.cache.size || 0 //Fetch client user count cache size or 0
+    //Put all into info Embed
     let info = new MessageEmbed()
     .setAuthor({name: client.user.username, iconURL: client.user.displayAvatarURL({dynamic: true})})
     .addFields(

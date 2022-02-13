@@ -2,15 +2,15 @@ const {discord, MessageEmbed} = require('discord.js')
 const balSchema = require('../../Schema/balSchema')
 
 module.exports.run = async (client, message, args, gprefix) => {
-    const Target = message.member.user
-    let data = await balSchema.findOne({ _id: Target.id })
-    if(!data) {
+    const Target = message.member.user //message author
+    let data = await balSchema.findOne({ _id: Target.id }) //Find data
+    if(!data) { //If not create one
         await balSchema.create({ _id: Target.id, balanace: 0 })
         const create = new MessageEmbed()
             .setDescription(`Current balance is \`0\`.`)
             .setColor('GREEN')
         return message.channel.send({embeds: [create]})
-    } else {
+    } else { //Else display current balance
     const success = new MessageEmbed()
         .setDescription(`Current balance is \`${data.balance.toLocaleString()}\`.`)
         .setColor('GREEN')
@@ -19,6 +19,6 @@ module.exports.run = async (client, message, args, gprefix) => {
 }
 module.exports.help = {
     name: 'balance',
-    aliases: ['coins'],
+    aliases: ['coins', 'bal'],
     permLevel: "User"
 }

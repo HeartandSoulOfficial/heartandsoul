@@ -1,56 +1,48 @@
 const {discord, MessageEmbed} = require('discord.js')
 const balSchema = require('../../Schema/balSchema')
+const {invalid, broke} = require('../../functions')
 
 module.exports.run = async (client, message, args, gprefix) => {
     let amount = args[0];
     let random = Math.floor(Math.random() * 2)
-    const Target = message.member.user
-
-    const invalid = new MessageEmbed()
-        .setDescription("Enter a valid number to coin flip.")
-        .setColor('YELLOW')
-
-    const broke = new MessageEmbed()
-        .setDescription("You do not have enough money to coin flip")
-        .setColor('WHITE')
+    const Target = message.member.user //Message author
 
     const lost = new MessageEmbed()
         .setColor('DARK_BLUE')
-
     const win = new MessageEmbed()
         .setColor('LUMINOUS_VIVID_PINK')
-
+    //Parse int if not args is not half or all
     if(amount != 'half' && amount != 'all'){
-        amount = parseInt(amount)
-        if(Number.isNaN(amount) || amount < 0) return message.channel.send({embeds: [invalid]})
+        amount = parseInt(amount) //If number is NaN or less than 1 return invalid
+        if(Number.isNaN(amount) || amount < 1) return invalid(message, 'coin flip.')
     }
-
+    //Find data
     let data = await balSchema.findOne({ _id: Target.id })
-    if(!data){
+    if(!data){ //If data doesn't exist create and return broke
         balSchema.create({ _id: Target.id, balance: 0 })
-        return message.channel.send({embeds: [broke]})
+        return broke(message, 'coin flip.')
     }
-
+    //If balance is less than amount return broke
     if (data.balance < amount){
-        return message.channel.send({embeds: [broke]})
+        return broke(message, 'coin flip.')
     }
-
-    if(amount == 'half'){
-        amount = Math.floor(data.balance/2)
+    //if amount is half
+    if(amount == 'half'){ //If balance is one set to amount to 1
+        if (data.balance == 1){
+            amount = 1
+        } else { //Else divide balance by 2 and round down
+            amount = Math.floor(data.balance/2)
+        } //If amount is all set amount to user's entire balance
     } else if(amount == 'all'){
         amount = data.balance
     }
 
-    if(random == 0){
-        if (data.balance < amount){
-            data.balance = 0
-        } else {
-            data.balance = data.balance - amount
-        }
+    if(random == 0){//Lost
+        data.balance = data.balance - amount
         await data.save()
         lost.setDescription(`**The coin landed on tails.**\nYou lost __${amount.toLocaleString()}__\nNew balance is \`${data.balance.toLocaleString()}\``)
         message.channel.send({embeds: [lost]})
-    } else{
+    } else{//Win
         data.balance = data.balance + amount
         await data.save()
         win.setDescription(`**The coin landed on heads.**\nYou won __${amount.toLocaleString()}__\nNew balance is \`${data.balance.toLocaleString()}\``)
