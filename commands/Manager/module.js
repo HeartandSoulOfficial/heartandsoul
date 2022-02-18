@@ -7,6 +7,8 @@ module.exports.run = async (client, message, args, gprefix, level) => {
 
     const {container} = client
 
+    if(!args.length) return message.channel.send({embeds: [noMod]})
+
     args = args[0].toLowerCase()
     let moduleName = args[0].toUpperCase() + args.slice(1)
     let cmdArray = [moduleName]
@@ -20,7 +22,7 @@ module.exports.run = async (client, message, args, gprefix, level) => {
         }
     });
 
-    if(cmdArray.length < 2 || !args.length) return message.channel.send({embeds: [noMod]})
+    if(cmdArray.length < 2) return message.channel.send({embeds: [noMod]})
 
     let data = await commandSchema.findOne({ _id: message.guild.id })
 
