@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js')
 const moment = require('moment')
 const {Fix} = require('../../functions')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     const unfound = new MessageEmbed()
         .setDescription("Couldn't find that role.")
         .setColor('FUCHSIA')
@@ -67,8 +67,14 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'roleinfo',
     aliases: ['rinfo'],
-    permLevel: 'User'
+    module: "Miscellaneous",
+    description: "Get information about a role.",
+    usage: "roleinfo [role]"
 }

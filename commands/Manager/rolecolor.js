@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     const unfound = new MessageEmbed()
         .setDescription("Couldn't find that role.")
         .setColor('FUCHSIA')
@@ -63,8 +63,14 @@ module.exports.run = async (client, message, args, gprefix) => {
 
 }
 
+module.exports.conf = {
+    permLevel: "Administrator"
+}
+
 module.exports.help = {
     name: 'rolecolor',
     aliases: ['rc'],
-    permLevel: "Administrator"
+    module: "Manager",
+    description: "Change the color of a role.",
+    usage: "rolecolor [role] [hex color]"
 }

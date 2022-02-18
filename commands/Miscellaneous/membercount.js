@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let server = message.guild
     let fetching = new MessageEmbed().setDescription('Fetching info...')
     let wait = message.channel.send({embeds: [fetching]})
@@ -26,8 +26,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'membercount',
     aliases: ['count', 'mc'],
-    permLevel: 'User'
+    module: "Miscellaneous",
+    description: "Get the server member count.",
+    usage: "membercount"
 }

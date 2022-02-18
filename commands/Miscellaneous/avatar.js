@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let userID = args[0]
     let Target = message.mentions.users.first()
 
@@ -34,8 +34,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     }
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'avatar',
     aliases: ['av'],
-    permLevel: 'User'
+    module: "Miscellaneous",
+    description: "Get a users' avatar.",
+    usage: "avatar (user)"
 }

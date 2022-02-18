@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js')
 const moment = require('moment')
 require('dotenv').config()
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let guilds = await client.guilds.fetch() //Fetch all guilds of client
     let ownerGuild = await client.guilds.fetch(process.env.OWNER_GUILD) //Fetch bot owner guild
     let owner = (await ownerGuild.members.fetch(process.env.OWNER_ID)).user //Fetch owner from owner guild
@@ -31,8 +31,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     message.channel.send({embeds: [info]})
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'info',
     aliases: [],
-    permLevel: "User"
+    module: "Info",
+    description: "Get bot info.",
+    usage: "info"
 }

@@ -1,7 +1,7 @@
 const {discord, MessageEmbed} = require('discord.js')
 const {invalid} = require('../../functions')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
 
     const perms = new MessageEmbed()
         .setDescription('I don\'t have permissions to set slowmode in this channel')
@@ -22,8 +22,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     })
 }
 
+module.exports.conf = {
+    permLevel: "Server Moderator"
+}
+
 module.exports.help = {
     name: 'purge',
     aliases: ['prune'],
-    permLevel: "Server Moderator"
+    module: "Manager",
+    description: "Delete a number of messages from a channel.",
+    usage: "purge [amount]"
 }

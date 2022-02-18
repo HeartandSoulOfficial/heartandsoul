@@ -3,7 +3,7 @@ const dailySchema = require('../../Schema/dailySchema')
 const balSchema = require('../../Schema/balSchema')
 const ms = require('parse-ms')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     const Target = message.member.user //Message author
     //Find user's dailySchema
     let data = await dailySchema.findOne({ _id: Target.id })
@@ -60,8 +60,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     await data.save()
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'daily',
     aliases: [],
-    permLevel: "User"
+    module: "Economy",
+    description: "Collect daily income.",
+    usage: "daily"
 }

@@ -1,7 +1,7 @@
 const {discord, MessageEmbed} = require('discord.js')
 const balSchema = require('../../Schema/balSchema')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     const Target = message.member.user //message author
     let data = await balSchema.findOne({ _id: Target.id }) //Find data
     if(!data) { //If not create one
@@ -17,8 +17,15 @@ module.exports.run = async (client, message, args, gprefix) => {
     message.channel.send({embeds: [success]})
     }
 }
+
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'balance',
     aliases: ['coins', 'bal'],
-    permLevel: "User"
+    module: "Economy",
+    description: "Checks your balance.",
+    usage: "balance"
 }

@@ -1,7 +1,7 @@
 const {discord, MessageEmbed, MessageFlags} = require('discord.js')
 const moment = require('moment')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let userID = args[0]
     let Target = message.mentions.users.first()
     let roleList = [];
@@ -137,8 +137,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     message.channel.send({embeds: [response]})*/
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: "whois",
     aliases: ['who', 'userinfo', 'ui'],
-    permLevel: 'User'
+    module: "Miscellaneous",
+    description: "Get user information.",
+    usage: "whois (user)"
 }

@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js');
 const balSchema = require('../../Schema/balSchema')
 const {unfound, invalid} = require('../../functions')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let amount;
     let Target = message.mentions.users.first()
     //No args
@@ -30,8 +30,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     message.channel.send({embeds: [success]})
 }
 
+module.exports.conf = {
+    permLevel: "Bot Owner"
+}
+
 module.exports.help = {
     name: 'add-money',
     aliases: ['add'],
-    permLevel: "Bot Owner"
+    module: "Economy",
+    description: "Adds to the user balance a certain amount.",
+    usage: "add-money [user] [amount]"
 }

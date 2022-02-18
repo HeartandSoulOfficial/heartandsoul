@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js')
 const balSchema = require('../../Schema/balSchema')
 const {invalid, broke} = require('../../functions')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let amount = args[0];
     let random = Math.floor(Math.random() * 2)
     const Target = message.member.user //Message author
@@ -50,8 +50,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     }
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: "coinflip",
     aliases: ['cf','flip'],
-    permLevel: "User"
+    module: "Economy",
+    description: "Coinflip an amount to earn or lose amount.",
+    usage: "coinflip [amount]"
 }

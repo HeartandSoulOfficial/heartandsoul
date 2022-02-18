@@ -1,5 +1,6 @@
 const {MessageEmbed} = require('discord.js')
 const PrefixSchema = require('../Schema/prefixSchema')
+const commandSchema = require('../Schema/commandSchema')
 const {permlevel} = require('../functions')
 
 module.exports = async (client, message) => {
@@ -15,10 +16,17 @@ module.exports = async (client, message) => {
     const deny = new MessageEmbed()
         .setDescription('You don\'t have permissions to use this command')
         .setColor('RED')
+    const disable = new MessageEmbed()
+        .setDescription('That command is disabled on this server')
+        .setColor('RED')
 
     if (message.author.bot || message.channel.type == 'DM') return
 
     let data = await PrefixSchema.findOne({
+        _id: message.guild.id
+    })
+
+    let commandData = await commandSchema.findOne({
         _id: message.guild.id
     })
 
@@ -42,11 +50,15 @@ module.exports = async (client, message) => {
 
     if (!commands) return;
 
-    if (level < container.levelCache[commands.help.permLevel]) {
+    if (commandData) {
+        if(commandData.disabled.includes(commands.help.name.toLowerCase())) return message.channel.send({embeds: [disable]})
+    }
+
+    if (level < container.levelCache[commands.conf.permLevel]) {
         return message.channel.send({embeds: [deny]})
     }
     try {
-        commands.run(client, message, args, gprefix)
+        commands.run(client, message, args, gprefix, level)
     } catch (err){
         console.error(err)
         message.channel.send({ content: `There was a problem with your request.\n\`\`\`${err.message}\`\`\`` })

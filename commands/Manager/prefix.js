@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js')
 
 const PrefixSchema = require('../../Schema/prefixSchema')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     //Set newprefix to args[0]
     let newprefix = args[0]
     //If new prefix is invalid return invalid prefix
@@ -56,8 +56,15 @@ module.exports.run = async (client, message, args, gprefix) => {
             }
     }
 }
+
+module.exports.conf = {
+    permLevel: "Administrator"
+}
+
 module.exports.help = {
     name: 'prefix',
     aliases: [],
-    permLevel: "Administrator"
+    module: "Manager",
+    description: "Get or set the command prefix for this server.",
+    usage: "prefix [args]"
 }

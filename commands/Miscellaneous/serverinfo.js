@@ -2,7 +2,7 @@ const {discord, MessageEmbed} = require('discord.js')
 const moment = require('moment')
 const {fixTier, fixVanity}= require('../../functions')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     let owner = (await message.guild.fetchOwner()).user
     let categorySize = (await message.guild.channels.fetch()).filter(c => c?.type == 'GUILD_CATEGORY').size
     let textSize = (await message.guild.channels.fetch()).filter(c => c?.type == 'GUILD_TEXT').size
@@ -41,8 +41,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     message.channel.send({embeds: [serverinfo]})
 }
 
+module.exports.conf = {
+    permLevel: "User"
+}
+
 module.exports.help = {
     name: 'serverinfo',
     aliases: ['server'],
-    permLevel: 'User'
+    module: "Miscellaneous",
+    description: "Get server info/stats.",
+    usage: "serverinfo"
 }

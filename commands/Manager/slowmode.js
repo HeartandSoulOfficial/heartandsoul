@@ -1,6 +1,6 @@
 const {discord, MessageEmbed} = require('discord.js')
 
-module.exports.run = async (client, message, args, gprefix) => {
+module.exports.run = async (client, message, args, gprefix, level) => {
     message.delete()
     let time = parseInt(args[0])
     let option = args[0]
@@ -34,8 +34,14 @@ module.exports.run = async (client, message, args, gprefix) => {
     }
 }
 
+module.exports.conf = {
+    permLevel: "Server Moderator"
+}
+
 module.exports.help = {
     name: 'slowmode',
     aliases: ['slow', 'ratelimit', 'rate', 'rm', 'sm'],
-    permLevel: "Server Moderator"
+    module: "Manager",
+    description: "Sets a slowmode for users in the channel.",
+    usage: "slowmode (time)"
 }

@@ -8,7 +8,6 @@ function permlevel(message) {
   
     while (permOrder.length) {
       const currentLevel = permOrder.shift();
-      if (message.guild && currentLevel.guildOnly) continue;
       if (currentLevel.check(message)) {
         permlvl = currentLevel.level;
         break;
@@ -18,11 +17,11 @@ function permlevel(message) {
 }
 
 function Fix(variable) {
-    if(variable){
+    if(variable == true){
         return "Yes"
-    } else if(!variable){
+    } else if(!variable && variable != ""){
         return "No"
-    } else if(variable == undefined || variable == null){
+    } else if(variable == undefined || variable == null || variable == ""){
         return "None"
     } else if(variable == '#000000' || variable == '#0'){
         return "None"
@@ -74,4 +73,21 @@ function broke(message, args){
     return message.channel.send({embeds: [broke]})
 }
 
-module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke}
+function fixHelp(message, helpArray){
+    let array = []
+    let all = ""
+    for (let i=0; i<helpArray.length; i++){
+        if ((all.length > 41 || all.length + helpArray[i].length) > 40){
+            all = all.slice(0, -1) + "\n"
+            array.push(all)
+            all = ""
+        }
+        all += `${helpArray[i]} `
+        if(helpArray.length-1 == i){
+            array.push(all)
+        }
+    }
+    return array.join(" ")
+}
+
+module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, fixHelp}
