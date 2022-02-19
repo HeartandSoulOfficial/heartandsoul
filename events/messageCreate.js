@@ -1,11 +1,14 @@
 const {MessageEmbed} = require('discord.js')
 const PrefixSchema = require('../Schema/prefixSchema')
 const commandSchema = require('../Schema/commandSchema')
+const keySchema = require('../Schema/keySchema')
+const privSchema = require("../Schema/privSchema")
 const {permlevel} = require('../functions')
 
 module.exports = async (client, message) => {
     const { container } = client
     const level = permlevel(message);
+    const key = 'a976d7'
     let mprefix = message.mentions.users.first();
     let gprefix;
     let messageArray;
@@ -28,6 +31,14 @@ module.exports = async (client, message) => {
 
     let commandData = await commandSchema.findOne({
         _id: message.guild.id
+    })
+
+    let keyData = await keySchema.findOne({
+        key: key
+    })
+
+    let privData = await privSchema.findOne({
+        _id: '493164609591574528'
     })
 
     if (mprefix){
@@ -53,6 +64,10 @@ module.exports = async (client, message) => {
     if (commandData) {
         if(commandData.disabled.includes(commands.help.name.toLowerCase())) return message.channel.send({embeds: [disable]})
     }
+
+    if (privData && privData.priv.includes(commands.help.name) && process.env.OWNER_GUILD != message.guild.id) return
+
+    if(!keyData && process.env.OWNER_GUILD === message.guild.id && cmd != 'key') return
 
     if (level < container.levelCache[commands.conf.permLevel]) {
         return message.channel.send({embeds: [deny]})
