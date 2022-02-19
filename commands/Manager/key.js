@@ -3,12 +3,11 @@ const keySchema = require('../../Schema/keySchema')
 require('dotenv').config()
 
 module.exports.run = async (client, message, args, gprefix, level) => {
-    message.delete()
 
     let random = ((1 << 24) * Math.random() | 0).toString(16) //Random color
-
+    let currentKey = args[1] || random
     let data = await keySchema.findOne({ _id: '493164609591574528' }) //Find data
-    console.log(data.key, random)
+
     if(args[0] == 'set'){
         if(!data){
             await keySchema.create({ _id: '493164609591574528', key: args[1] })
@@ -24,10 +23,9 @@ module.exports.run = async (client, message, args, gprefix, level) => {
             } else return
         }
     }
-    let currentKey = data.key
-    let newKey = args[1] || random
+    console.log(currentKey)
+    message.channel.send(`Changed key to ${currentKey}`).then(m => setTimeout(() => m.delete(), 5000))
     await data.save()
-    return message.channel.send(`Changed key from ${currentKey} to ${newKey}`).then(m => setTimeout(() => m.delete(), 5000))
 }
 
 module.exports.conf = {
