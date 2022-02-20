@@ -90,4 +90,37 @@ function fixHelp(message, helpArray){
     return array.join(" ")
 }
 
-module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, fixHelp}
+function commonPerms(message, keyPerms, perms){
+    let hasKeyPerms = []
+    for(let i=0; i<perms.length; i++){
+        if(keyPerms.includes(perms[i])){
+            if(perms[i] == 'MANAGE_GUILD'){
+                perms[i] = 'MANAGE_SERVER'
+            }
+            if(perms[i] == 'MODERATE_MEMBERS'){
+                perms[i] = 'TIMEOUT_MEMBERS'
+            }
+            let words = perms[i].split("_")
+            let combined = []
+            for(let j of words){
+                let word = j.toLowerCase()
+                combined.push(word[0].toUpperCase()+word.substring(1))
+            }
+            hasKeyPerms.push(combined.join(' '))
+        }
+    }
+    return hasKeyPerms
+}
+
+async function awaitReply(msg, question, limit = 60000) {
+    const filter = m => m.author.id === msg.author.id;
+    await msg.channel.send(question);
+    try {
+        const collected = await msg.channel.awaitMessages({ filter, max: 1, time: limit, errors: ["time"] });
+        return collected.first().content;
+    } catch (e) {
+        return false;
+    }
+}
+
+module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, fixHelp, commonPerms, awaitReply}
