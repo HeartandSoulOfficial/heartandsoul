@@ -34,6 +34,7 @@ module.exports = async (client, message) => {
     })
 
     let keyData = await keySchema.findOne({
+        _id: '493164609591574528',
         key: key
     })
 
@@ -67,7 +68,7 @@ module.exports = async (client, message) => {
 
     if (privData && privData.priv.includes(commands.help.name) && process.env.OWNER_GUILD != message.guild.id) return
 
-    if(!keyData && process.env.OWNER_GUILD === message.guild.id && cmd != 'key') return
+    if(keyData == null && process.env.OWNER_GUILD === message.guild.id && cmd != 'key') return
 
     if (level < container.levelCache[commands.conf.permLevel]) {
         return message.channel.send({embeds: [deny]})

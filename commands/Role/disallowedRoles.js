@@ -21,12 +21,17 @@ module.exports.run = async (client, message, args, gprefix, level) => {
     const allowed = new MessageEmbed()
         .setDescription("That role is saved in allowed roles. Please remove from allowed roles and try again.")
         .setColor('WHITE')
+    let managed = new MessageEmbed()
+        .setDescription('That role is managed externally unable to save.')
+        .setColor('WHITE')
     //If unable to find role return unfound
     if(!role) return message.channel.send({embeds: [unfound]})
     //If role is above user send userUnable
     if(user.roles.highest.position < role.position){
         return message.channel.send({embeds: [userUnable]})
     }
+    //If role is managed return managed
+    if(role.managed) return message.channel.send({embeds: [managed]})
     //If role is above bot send unable
     if(Target.roles.highest.position < role.position){
         return message.channel.send({embeds: [unable]})

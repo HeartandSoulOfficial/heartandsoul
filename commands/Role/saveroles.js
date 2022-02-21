@@ -1,7 +1,7 @@
 const {discord, MessageEmbed} = require('discord.js')
 const savedRolesSchema = require('../../Schema/savedRolesSchema')
 const rolesSchema = require('../../Schema/rolesSchema')
-const {commonPerms} = require('../../functions')
+const {commonPerms, fixRoleMention} = require('../../functions')
 
 module.exports.run = async (client, message, args, gprefix, level) => {
 
@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args, gprefix, level) => {
 
     let keyPerms = ['ADMINISTRATOR', 'KICK_MEMBERS', 'BAN_MEMBERS', 'MANAGE_CHANNELS', 'MANAGE_GUILD', 'MANAGE_MESSAGES', 'MANAGE_ROLES', 'MANAGE_EMOJIS_AND_STICKERS', 'MODERATE_MEMBERS']
 
-    let success = new MessageEmbed().setDescription("Successfully saved your current roles that are allowed to be saved.").setColor('GREEN')
+    let success = new MessageEmbed().setDescription("Successfully saved your **current** roles that are allowed to be saved.").setColor('GREEN')
     let unable = new MessageEmbed().setDescription("Unable to save your roles or no roles to be saved.").setColor('RED')
 
     let roleData = await rolesSchema.findOne({ _id: message.guild.id })
@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args, gprefix, level) => {
         let similar = commonPerms(message, keyPerms, role.permissions.toArray())
         if(allowedRoles.includes(role.id)){
             savedRolesArray.push(role.id)
-        } else if(disallowedRoles.includes(role.id) || similar.length > 0){
+        } else if(disallowedRoles.includes(role.id) || similar.length > 0 || role.managed){
             continue
         } else if(role.name.toLowerCase() == 'muted'){
             return message.channel.send({embeds: [unable]})
@@ -41,11 +41,13 @@ module.exports.run = async (client, message, args, gprefix, level) => {
     let data = await savedRolesSchema.findOne({ _id: message.author.id })
     if(!data){
         await savedRolesSchema.create({ _id: message.author.id, savedRoles: savedRolesArray })
+        success.addField('Saved', fixRoleMention(message, savedRolesArray))
     } else {
         data.savedRoles = savedRolesArray
+        success.addField('Saved', fixRoleMention(message, savedRolesArray))
+        await data.save()
     }
 
-    await data.save()
     message.channel.send({embeds: [success]})
 }
 

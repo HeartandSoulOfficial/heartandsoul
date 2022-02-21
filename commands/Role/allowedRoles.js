@@ -28,12 +28,17 @@ module.exports.run = async (client, message, args, gprefix, level) => {
         .setColor('WHITE')
     let success = new MessageEmbed()
         .setColor('GREEN')
+    let managed = new MessageEmbed()
+        .setDescription('That role is managed externally unable to save.')
+        .setColor('WHITE')
     //If unable to find role return unfound
     if(!role) return message.channel.send({embeds: [unfound]})
     //If role is above user send userUnable
     if(user.roles.highest.position < role.position){
         return message.channel.send({embeds: [userUnable]})
     }
+    //If role is managed return managed
+    if(role.managed) return message.channel.send({embeds: [managed]})
     //If role is above bot send unable
     if(Target.roles.highest.position < role.position){
         return message.channel.send({embeds: [unable]})
@@ -57,7 +62,7 @@ module.exports.run = async (client, message, args, gprefix, level) => {
             await rolesSchema.create({ _id: message.guild.id, allowedRoles: [roleID], disallowedRoles: []})
             success.setDescription(`Added ${role.name} to allowed saved roles.`)
         } else if(!data.allowedRoles.includes(roleID)){ //Else if it does exist push into allowed roles
-            if(data.allowedRoles.includes(roleID)) return message.channel.send({embeds: [disallowed]})
+            if(data.disallowedRoles.includes(roleID)) return message.channel.send({embeds: [disallowed]})
             data.allowedRoles.push(roleID)
             success.setDescription(`Added ${role.name} to allowed saved roles.`)
             await data.save()
