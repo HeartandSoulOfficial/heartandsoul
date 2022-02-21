@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args, gprefix, level) => {
                 message.channel.send("Allowed")
             } else if(["n","no","cancel"].includes(response)) { //Else if no return cancelled
               return message.channel.send({embeds: [cancelled]})
-            }
+            } else return message.channel.send({embeds: [cancelled]})
         }
         //If data doesn't exist create one
         if(!data){

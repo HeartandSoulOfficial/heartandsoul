@@ -123,4 +123,13 @@ async function awaitReply(msg, question, limit = 60000) {
     }
 }
 
-module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, fixHelp, commonPerms, awaitReply}
+function fixRoleMention(message, roleArray){
+    if(roleArray.length == 0) return "None"
+    let roleMentionArray = []
+    for (let i=0; i<roleArray.length; i++){
+        roleMentionArray.push(`<@&${roleArray[i]}>`)
+    }
+    return roleMentionArray.join(" ")
+}
+
+module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, fixHelp, commonPerms, awaitReply, fixRoleMention}
