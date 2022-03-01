@@ -64,10 +64,10 @@ module.exports.run = async (client, message, args, gprefix, level) => {
     let data = await savedRolesSchema.findOne({ _id: user.id })
     if(!data){
         await savedRolesSchema.create({ _id: user.id, savedRoles: savedRolesArray })
-        success.setAuthor({name: user.username+"#"+user.discriminator, iconURL: user.displayAvatarURL({dynamic: true})}).addField('Saved', fixRoleMention(message, savedRolesArray))
+        success.setAuthor({name: user.user.username+"#"+user.user.discriminator, iconURL: user.displayAvatarURL({dynamic: true})}).addField('Saved', fixRoleMention(message, savedRolesArray))
     } else {
         data.savedRoles = savedRolesArray
-        success.setAuthor({name: user.username+"#"+user.discriminator, iconURL: user.displayAvatarURL({dynamic: true})}).addField('Saved', fixRoleMention(message, savedRolesArray.reverse()))
+        success.setAuthor({name: user.user.username+"#"+user.user.discriminator, iconURL: user.displayAvatarURL({dynamic: true})}).addField('Saved', fixRoleMention(message, savedRolesArray.reverse()))
         await data.save()
     }
 
