@@ -5,7 +5,6 @@ const {fixRoleMention} = require('../../functions')
 module.exports.run = async (client, message, args, gprefix, level) => {
     let success = new MessageEmbed()
         .setColor('GREEN')
-
     //Fetch rolesSchema
     let data = await rolesSchema.findOne({ _id: message.guild.id })
     //If data doesn't exist create one
@@ -21,7 +20,7 @@ module.exports.run = async (client, message, args, gprefix, level) => {
 }
 
 module.exports.conf = {
-    permLevel: 'Administrator'
+    permLevel: 'Server Moderator'
 }
 
 module.exports.help = {

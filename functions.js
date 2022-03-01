@@ -52,9 +52,9 @@ function fixVanity(variable) {
     }
 }
 
-function unfound(message) {
+function unfound(message, args) {
     const unfound = new MessageEmbed()
-        .setDescription("Couldn't find that user.")
+        .setDescription(`Couldn't find ${args}`)
         .setColor('FUCHSIA')
     return message.channel.send({embeds: [unfound]})
 }
@@ -71,6 +71,27 @@ function broke(message, args){
         .setDescription(`You do not have enough money to ${args}`)
         .setColor('WHITE')
     return message.channel.send({embeds: [broke]})
+}
+
+function unable(message){
+    const unable = new MessageEmbed()
+        .setDescription('That role is above me.')
+        .setColor('RED')
+    return message.channel.send({embeds: [unable]})
+}
+
+function userUnable(message){
+    const userUnable = new MessageEmbed()
+        .setDescription('That role is above you.')
+        .setColor('RED')
+    return message.channel.send({embeds: [userUnable]})
+}
+
+function cancelled(message){
+    const cancelled = new MessageEmbed()
+        .setDescription('Action cancelled.')
+        .setColor('DARK_BUT_NOT_BLACK')
+    return message.channel.send({embeds: [cancelled]})
 }
 
 function fixHelp(message, helpArray){
@@ -132,4 +153,4 @@ function fixRoleMention(message, roleArray){
     return roleMentionArray.join(" ")
 }
 
-module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, fixHelp, commonPerms, awaitReply, fixRoleMention}
+module.exports = {permlevel, Fix, fixTier, fixVanity, unfound, invalid, broke, unable, userUnable, cancelled, fixHelp, commonPerms, awaitReply, fixRoleMention}

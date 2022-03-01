@@ -54,13 +54,20 @@ module.exports = async (client, message) => {
     }
     gprefix = gprefix || 'hns'
 
-    messageArray = message.content.split(gprefix).join("").trim().split(" ")
+    messageArray = message.content.slice(gprefix.length).trim().split(" ")
     args = messageArray.slice(1)
     cmd = messageArray[0]
 
     commands = container.commands.get(cmd) || container.commands.get(container.aliases.get(cmd))
 
-    if (!commands) return;
+    if (!commands){ 
+        gprefix = 'hns'
+        messageArray = message.content.slice(gprefix.length).trim().split(" ")
+        args = messageArray.slice(1)
+        cmd = messageArray[0]
+        commands = container.commands.get(cmd) || container.commands.get(container.aliases.get(cmd))
+        if(!commands) return;
+    }
 
     if (commandData) {
         if(commandData.disabled.includes(commands.help.name.toLowerCase())) return message.channel.send({embeds: [disable]})
